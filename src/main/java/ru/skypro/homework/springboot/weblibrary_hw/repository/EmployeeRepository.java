@@ -7,5 +7,10 @@ import java.util.List;
 public interface EmployeeRepository {
 
 
-    public List<Employee> getAllEmployees();
+    List<Employee> getAllEmployees();
+    Employee getEmployeeById(int id);
+    void addEmployee(Employee employee);
+    void editEmployee(int id, Employee employee);
+    void deleteEmployee(int id);
+    List<Employee> getEmployeesWithSalaryHigherThan(int salary);
 }

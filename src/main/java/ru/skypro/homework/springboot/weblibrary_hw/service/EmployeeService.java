@@ -14,5 +14,17 @@ public interface EmployeeService {
     public Employee maxSalary();
 
     public List<Employee> salaryAboveAverage();
-// прописать 4 метода
+
+    Employee getEmployeeById(int id);
+
+    void addEmployee(Employee employee);
+
+    void editEmployee(int id, Employee employee);
+
+    void deleteEmployee(int id);
+
+    List<Employee> getEmployeesWithSalaryHigherThan(int salary);
+
 }
+
+
