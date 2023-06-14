@@ -1,29 +1,55 @@
 package ru.skypro.homework.springboot.weblibrary_hw.service;
 
-import ru.skypro.homework.springboot.weblibrary_hw.pojo.Employee;
+import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeDTO;
 
+import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeFullInfo;
+import ru.skypro.homework.springboot.weblibrary_hw.exceptions.IncorrectIdException;
 import java.util.List;
 
 public interface EmployeeService {
-    List<Employee> getAllEmployees();
 
-    public int sumSalary();
+    // метод возвращает полный список сотрудников
+    List<EmployeeDTO> getAllEmployees();
 
-    public Employee minSalary();
+  // метод возвращает сумму зарплат
+     int sumSalary();
 
-    public Employee maxSalary();
+     EmployeeDTO minSalary();
 
-    public List<Employee> salaryAboveAverage();
+     EmployeeDTO maxSalary();
 
-    Employee getEmployeeById(int id);
+     List<EmployeeDTO> salaryAboveAverage();
 
-    void addEmployee(Employee employee);
+    EmployeeDTO getEmployeeById(int id) throws IncorrectIdException;
 
-    void editEmployee(int id, Employee employee);
 
-    void deleteEmployee(int id);
+    // метод дабавляет сотрудника в базу
+    void addEmployee(EmployeeDTO employee);
 
-    List<Employee> getEmployeesWithSalaryHigherThan(int salary);
+
+    // метод для изменения данных сотрудника
+    void editEmployee(int id, EmployeeDTO employeeDTO) throws IncorrectIdException;
+
+
+
+    // метод удаляет сотрудника по id
+    void deleteEmployee(int id) throws IncorrectIdException;
+
+    List<EmployeeDTO> getEmployeesWithSalaryHigherThan(int salary);
+
+    // возвращает всех сотрудников с должностями
+    List<EmployeeFullInfo> getAllEmployeeFullInfo();
+
+    // возвращает сотрудника по id с должностью
+    EmployeeFullInfo getAllEmployeeByIdFullInfo(int id) throws IncorrectIdException;
+
+    // метод возвращает список сотрудников по позиции
+    List<EmployeeDTO> getEmployeeByPositionName(String position);
+
+    // метод возвращает информацию о сотрудниках, основываясь на номере страницы.
+    List<EmployeeDTO> getEmployeeFromPage(int page);
+
+
 
 }
 
