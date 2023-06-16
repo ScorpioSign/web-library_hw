@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class EmployeeExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<?> handleIOException(IOException ioException) {
-        String message = "Ошибка ввода. Некорректный ID";
+        String message = "Значение не найдено";
         // Возвращает статус 404 (Not Found) при возникновении IOException.
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
@@ -26,9 +26,9 @@ public class EmployeeExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<?> handleException(Exception exception) {
+    public ResponseEntity<?> handleIncorrectIdException(IncorrectIdException incorrectIdException) {
         // Возвращает статус 400 (Bad Request) при возникновении Exception.
-        String message = "Неверные параметры запроса";
+        String message = "Ошибка ввода. Некорректный ID";
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }
