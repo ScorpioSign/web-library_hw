@@ -18,8 +18,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
 
-    // метод возвращает полный список сотрудников
-    @GetMapping()
+    @GetMapping("/all")
     List<EmployeeDTO> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
@@ -46,7 +45,7 @@ public class EmployeeController {
         return employeeService.salaryAboveAverage();
     }
 
-    // возвращает сотрудника по id
+
     @GetMapping("/{id}")
     @SneakyThrows
     public EmployeeDTO getEmployeeById(@PathVariable int id) {
@@ -59,7 +58,7 @@ public class EmployeeController {
 
 
     @GetMapping("/salary/higher")
-    public List<EmployeeDTO> getEmployeesWithSalaryHigherThan(@RequestParam int salary) {
+    public List<EmployeeDTO> getEmployeesWithSalaryHigherThan(@RequestParam("salary") int salary) {
         return employeeService.getEmployeesWithSalaryHigherThan(salary);
     }
 
@@ -75,11 +74,8 @@ public class EmployeeController {
 
     // метод дабавляет сотрудника в базу
     @PostMapping("/")
-    @SneakyThrows
+
     public void addEmployee(@RequestBody EmployeeDTO employee) {
-        if (employee.getId() == 0 || employee.getId() < getAllEmployees().size()) {
-            throw new IOException();
-        }
         employeeService.addEmployee(employee);
     }
 
@@ -98,13 +94,14 @@ public class EmployeeController {
     }
 
     // метод возвращает список сотрудников по позиции
-    @GetMapping("/position/{position}")
-    public List<EmployeeDTO> getEmployeeByPosition(@RequestParam("position") String position) {
+
+    @GetMapping()
+    List<EmployeeDTO> getEmployeeByPositionName(@RequestParam(required = false) String position) {
         return employeeService.getEmployeeByPositionName(position);
     }
 
     // возвращает сотрудника по id с должностью
-    @GetMapping("/{id}/full_info")
+    @GetMapping("/{id}/fullInfo")
     public EmployeeFullInfo getAllEmployeeByIdFullInfo(@PathVariable Integer id) throws IncorrectIdException {
         return employeeService.getAllEmployeeByIdFullInfo(id);
     }
@@ -116,10 +113,16 @@ public class EmployeeController {
     }
 
     // возвращает всех сотрудников с должностями
-    @GetMapping("/full_info")
+    @GetMapping("/fullInfo")
     List<EmployeeFullInfo> getAllEmployeeFullInfo() {
         return employeeService.getAllEmployeeFullInfo();
     }
 
+
+    // метод возвращает список сотркдников с максимальной зарплатой
+    @GetMapping("/salary/withHighestSalary")
+    public List<EmployeeDTO> withHighestSalary() {
+        return employeeService.withHighestSalary();
+    }
 
 }

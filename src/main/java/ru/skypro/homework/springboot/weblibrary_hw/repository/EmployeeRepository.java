@@ -15,7 +15,6 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer>, P
             "from Employee e left join Position p where e.position.id = p.id")
     List<EmployeeFullInfo> findAllEmployeeFullInfo();
 
-    @Query("select e from Employee e where e.position.name = ?1")
     List<Employee> findEmployeeByPosition_Name(String name);
 
     @Query("select sum(e.salary) from Employee e")
@@ -32,13 +31,12 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer>, P
     Employee maxSalary();
 
 
-    @Query(value = "select e from Employee e where e.salary = (SELECT MAX(salary) FROM Employee)")
-    List<Employee> getEmployeesWithSalaryHigherThan(int salary);
-    //List<Employee> findBySalaryGreaterThan(int salary);
+    List<Employee> findEmployeeBySalaryGreaterThan(int salary);
 
     @Query(value = "SELECT e FROM Employee e")
     List<Employee> findAllEmployees();
 
 
-
+    @Query(value = "select e from Employee e where e.salary = (SELECT MAX(salary) FROM Employee)")
+    List<Employee> withHighestSalary();
 }

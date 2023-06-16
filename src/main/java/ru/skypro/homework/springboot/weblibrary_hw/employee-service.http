@@ -11,4 +11,30 @@ GET http://localhost:8080/employee/salary/max
 GET http://localhost:8080/employee/high-salary
 
 ### Получение всех сотрудников
-GET http://localhost:8080/employee
+GET http://localhost:8080/employee/all
+
+### Получение сотрудника по ID
+GET http://localhost:8080/employee/38
+
+### Получение сотрудников с зарплатой выше указанного значения
+GET http://localhost:8080/employee/salary/higher?salary=90000
+
+
+
+
+### Получение информации о сотрудниках с самой высокой зарплатой в фирме
+GET http://localhost:8080/employee/salary/withHighestSalary
+
+### Получение информации о всех сотрудниках фирмы, указанной в параметре должности
+GET http://localhost:8080/employee?position=designer
+
+### Получение полной инфо о сотруднике (имя, зарплата, название должности) с переданным в пути запроса идентификатором
+GET http://localhost:8080/employee/40/fullInfo
+
+### Получение информации о сотрудниках, основываясь на номере страницы
+GET http://localhost:8080/employee/page?page=0
+
+
+
+
+

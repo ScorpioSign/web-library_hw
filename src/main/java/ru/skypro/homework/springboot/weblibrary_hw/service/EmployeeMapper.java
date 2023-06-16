@@ -4,6 +4,11 @@ import org.springframework.stereotype.Component;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeDTO;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeFullInfo;
 import ru.skypro.homework.springboot.weblibrary_hw.entity.Employee;
+
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class EmployeeMapper {
 
@@ -12,17 +17,17 @@ public class EmployeeMapper {
         employeeDTO.setId(employee.getId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setSalary(employee.getSalary());
-        employeeDTO.setPosition(employee.getPosition().getName());
+
+
+
         return employeeDTO;
 
     }
 
     public static Employee toEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
-        employee.setId(employeeDTO.getId());
         employee.setName(employeeDTO.getName());
         employee.setSalary(employeeDTO.getSalary());
-        //employee.setPosition(employeeDTO.getPosition());
 
         return employee;
     }
@@ -34,5 +39,12 @@ public class EmployeeMapper {
         employeeFullInfo.setSalary(employee.getSalary());
         employeeFullInfo.setPositionName(employee.getPosition().getName());
         return employeeFullInfo;
+    }
+
+    static List<EmployeeDTO> toEmployeeDTOList(List<Employee> employeeList) {
+        return employeeList
+                .stream()
+                .map(EmployeeMapper::fromEmployee)
+                .collect(Collectors.toList());
     }
 }

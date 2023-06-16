@@ -13,7 +13,6 @@ import ru.skypro.homework.springboot.weblibrary_hw.repository.EmployeeRepository
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -21,15 +20,15 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    @PostConstruct
-    public void init() {
-        employeeRepository.deleteAll();
-        employeeRepository.saveAll(List.of(new Employee("Катя", 90_000),
-                new Employee("Дима", 102_000),
-                new Employee("Олег", 80_000),
-                new Employee("Вика", 165_000))
-        );
-    }
+//    @PostConstruct
+//    public void init() {
+//        employeeRepository.deleteAll();
+//        employeeRepository.saveAll(List.of(new Employee("Катя", 90_000),
+//                new Employee("Дима", 102_000),
+//                new Employee("Олег", 80_000),
+//                new Employee("Вика", 165_000))
+//        );
+//    }
 
 
     @Override
@@ -45,15 +44,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAllEmployeeFullInfo();
     }
 
+
     @Override
     public EmployeeFullInfo getAllEmployeeByIdFullInfo(int id) throws IncorrectIdException {
-        return employeeRepository.findAllEmployeeFullInfo().get(id);
-    }
-
-    public EmployeeFullInfo getAllEmployeeToIdFullInfo(int id) throws IncorrectIdException {
         return employeeRepository.findById(id)
                 .map(EmployeeMapper::toEmployeeFullInfo)
                 .orElseThrow(IncorrectIdException::new);
+
+
     }
 
     @Override
@@ -78,15 +76,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDTO> salaryAboveAverage() {
-        List<EmployeeFullInfo> employees = employeeRepository.findAllEmployeeFullInfo();
-        List<EmployeeDTO> highSalary = new ArrayList<>();
-        for (EmployeeFullInfo employee : employees) {
-            if (employee.getSalary() > employeeRepository.averageSalary()) {
-                highSalary.add(new EmployeeDTO());
-            }
-        }
 
-        return highSalary;
+        return employeeRepository.findAllEmployees().stream().
+                filter(t -> t.getSalary() > employeeRepository.averageSalary())
+                .map(EmployeeMapper::fromEmployee)
+                .collect(Collectors.toList());
     }
 
 
@@ -100,6 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void addEmployee(EmployeeDTO employee) {
+
         employeeRepository.save(EmployeeMapper.toEmployee(employee));
 
     }
@@ -127,11 +122,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDTO> getEmployeesWithSalaryHigherThan(int salary) {
-        return employeeRepository.getEmployeesWithSalaryHigherThan(salary)
+        return employeeRepository.findEmployeeBySalaryGreaterThan(salary)
                 .stream()
                 .map(EmployeeMapper::fromEmployee)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public List<EmployeeDTO> getEmployeeByPositionName(String position) {
@@ -144,11 +140,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         } else return getAllEmployees();
     }
 
+
     @Override
     public List<EmployeeDTO> getEmployeeFromPage(int page) {
         return employeeRepository.findAll(PageRequest.of(page, 10))
                 .stream().map(EmployeeMapper::fromEmployee)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EmployeeDTO> withHighestSalary() {
+        List<Employee> employees = employeeRepository.withHighestSalary();
+        return EmployeeMapper.toEmployeeDTOList(employees);
     }
 
 

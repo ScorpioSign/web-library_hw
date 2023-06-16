@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class EmployeeFullInfo {
-    int id;
+private int id;
     private String name;
     private int salary;
     private String positionName;
