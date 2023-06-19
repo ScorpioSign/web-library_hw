@@ -1,12 +1,16 @@
 package ru.skypro.homework.springboot.weblibrary_hw.controller;
 
+
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeDTO;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeFullInfo;
 import ru.skypro.homework.springboot.weblibrary_hw.exceptions.IncorrectIdException;
 import ru.skypro.homework.springboot.weblibrary_hw.service.EmployeeService;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -125,4 +129,12 @@ public class EmployeeController {
         return employeeService.withHighestSalary();
     }
 
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void createEmployeeFromFile(@RequestParam("file") MultipartFile file) throws IOException {
+        employeeService.uploadEmployeeFromFile(file);
+    }
 }
+
+
+

@@ -1,16 +1,22 @@
 package ru.skypro.homework.springboot.weblibrary_hw.service;
 
-import jakarta.annotation.PostConstruct;
+import aj.org.objectweb.asm.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeDTO;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeFullInfo;
+import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeReportDTO;
 import ru.skypro.homework.springboot.weblibrary_hw.entity.Employee;
 import ru.skypro.homework.springboot.weblibrary_hw.exceptions.IncorrectIdException;
 import ru.skypro.homework.springboot.weblibrary_hw.repository.EmployeeRepository;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
+
 
 //    @PostConstruct
 //    public void init() {
@@ -152,6 +159,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeDTO> withHighestSalary() {
         List<Employee> employees = employeeRepository.withHighestSalary();
         return EmployeeMapper.toEmployeeDTOList(employees);
+    }
+
+
+    @Override
+    public void uploadEmployeeFromFile(MultipartFile file) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        EmployeeDTO[] newEmployees = objectMapper.readValue(file.getBytes(), EmployeeDTO[].class);
+        for (EmployeeDTO e : newEmployees) {
+            addEmployee(e);
+        }
     }
 
 

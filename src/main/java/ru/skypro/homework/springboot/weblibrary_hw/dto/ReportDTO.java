@@ -5,18 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.File;
 import java.io.Serializable;
-
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDTO implements Serializable {
-    private int id;
-    private String name;
-    private int salary;
-    private String departmentName;
+public class ReportDTO implements Serializable {
+    private Integer id;
+    private File data;
 
 
 }

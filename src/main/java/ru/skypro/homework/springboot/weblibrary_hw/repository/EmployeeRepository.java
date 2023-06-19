@@ -4,6 +4,7 @@ package ru.skypro.homework.springboot.weblibrary_hw.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeFullInfo;
+import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeReportDTO;
 import ru.skypro.homework.springboot.weblibrary_hw.entity.Employee;
 
 import java.util.List;
@@ -39,4 +40,6 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer>, P
 
     @Query(value = "select e from Employee e where e.salary = (SELECT MAX(salary) FROM Employee)")
     List<Employee> withHighestSalary();
+
+
 }
