@@ -23,6 +23,10 @@ public class Report {
     @Column(name = "file", columnDefinition = "text")
     File file;
 
+    public Report(File file) {
+        this.file = file;
+    }
+
     @Override
     public String toString() {
         return "Отчет: " +

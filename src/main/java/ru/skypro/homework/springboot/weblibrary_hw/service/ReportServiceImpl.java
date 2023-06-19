@@ -36,10 +36,10 @@ public class ReportServiceImpl implements ReportService {
         String json = objectMapper.writeValueAsString(employeeReport); // JSON-строка
         System.out.println(json);
         // записываем файл
-        File file = new File("C:\\Users\\ы\\IdeaProjects\\web-library_hw\\src\\main\\java\\ru\\skypro\\homework\\springboot\\weblibrary_hw\\" + fileName);
+        File file = new File("src/main/java" + fileName);
         Files.writeString(file.toPath(), json);
 
-        Report report = new Report();
+        Report report = new Report(file);
         reportRepository.save(report);
         return report.getId();
     }
