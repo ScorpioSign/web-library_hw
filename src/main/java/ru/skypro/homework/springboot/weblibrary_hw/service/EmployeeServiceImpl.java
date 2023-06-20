@@ -12,6 +12,7 @@ import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeReportDTO;
 import ru.skypro.homework.springboot.weblibrary_hw.entity.Employee;
 import ru.skypro.homework.springboot.weblibrary_hw.exceptions.IncorrectIdException;
 import ru.skypro.homework.springboot.weblibrary_hw.repository.EmployeeRepository;
+import ru.skypro.homework.springboot.weblibrary_hw.repository.ReportRepository;
 
 
 import java.io.IOException;
@@ -25,7 +26,6 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
-
 
 //    @PostConstruct
 //    public void init() {

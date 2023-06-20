@@ -6,31 +6,24 @@ import lombok.experimental.Accessors;
 
 import java.io.File;
 
+
 @Entity
 @Table(name = "report")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Accessors (chain = true)
+@Accessors(chain = true)
 
 public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @Lob
-    @Column(name = "file", columnDefinition = "text")
-    File file;
+    @Column(name = "path", columnDefinition = "text")
+    String path;
 
-    public Report(File file) {
-        this.file = file;
-    }
-
-    @Override
-    public String toString() {
-        return "Отчет: " +
-                "номер отчета: " + id +
-                ", содержание: " + file + '\n';
+    public Report(String path) {
+        this.path = path;
     }
 }
