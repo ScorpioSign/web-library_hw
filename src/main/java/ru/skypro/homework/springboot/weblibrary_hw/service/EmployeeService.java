@@ -1,10 +1,13 @@
 package ru.skypro.homework.springboot.weblibrary_hw.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeDTO;
 
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeFullInfo;
+import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeReportDTO;
 import ru.skypro.homework.springboot.weblibrary_hw.exceptions.IncorrectIdException;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface EmployeeService {
@@ -56,6 +59,8 @@ public interface EmployeeService {
 
     // метод возвращает список сотрудников с максимальной зарплатой
     List<EmployeeDTO> withHighestSalary();
+
+    void uploadEmployeeFromFile(MultipartFile file) throws IOException;
 
 
 }

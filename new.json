@@ -1,0 +1,26 @@
+[
+{
+  "id": 50,
+  "name": "Паша",
+  "salary": 180000,
+  "departmentName": "department2"
+},
+{
+"id": 51,
+"name": "Олег",
+"salary": 105000,
+"departmentName": "department1"
+},
+{
+"id": 52,
+"name": "Оля",
+"salary": 132000,
+"departmentName": "department2"
+},
+{
+"id": 53,
+"name": "Таня",
+"salary": 90000,
+"departmentName": "department1"
+}
+  ]
