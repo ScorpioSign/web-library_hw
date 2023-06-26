@@ -1,4 +1,4 @@
-package ru.skypro.homework.springboot.weblibrary_hw.security.config;
+package ru.skypro.homework.springboot.weblibrary_hw.security;
 
 import jakarta.persistence.*;
 import lombok.Getter;

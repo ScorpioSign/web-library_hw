@@ -1,6 +1,5 @@
-package ru.skypro.homework.springboot.weblibrary_hw.security.config;
+package ru.skypro.homework.springboot.weblibrary_hw.security;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,4 +1,4 @@
-package ru.skypro.homework.springboot.weblibrary_hw.security.config;
+package ru.skypro.homework.springboot.weblibrary_hw.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
