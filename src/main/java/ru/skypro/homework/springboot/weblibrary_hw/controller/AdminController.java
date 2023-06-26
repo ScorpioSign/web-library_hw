@@ -1,6 +1,5 @@
 package ru.skypro.homework.springboot.weblibrary_hw.controller;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.MediaType;
@@ -11,14 +10,13 @@ import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeFullInfo;
 import ru.skypro.homework.springboot.weblibrary_hw.exceptions.IncorrectIdException;
 import ru.skypro.homework.springboot.weblibrary_hw.service.EmployeeService;
 
-
 import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/admin/employee")
 @RequiredArgsConstructor
-public class EmployeeController {
+public class AdminController {
     private final EmployeeService employeeService;
 
 
@@ -66,38 +64,38 @@ public class EmployeeController {
         return employeeService.getEmployeesWithSalaryHigherThan(salary);
     }
 
-//    @DeleteMapping("/{id}")
-//    @SneakyThrows
-//    public void deleteEmployee(@PathVariable int id) {
-//        EmployeeDTO employee = employeeService.getEmployeeById(id);
-//        if (employee == null) {
-//            throw new IOException();
-//        }
-//        employeeService.deleteEmployee(id);
-//    }
+    @DeleteMapping("/{id}")
+    @SneakyThrows
+    public void deleteEmployee(@PathVariable int id) {
+        EmployeeDTO employee = employeeService.getEmployeeById(id);
+        if (employee == null) {
+            throw new IOException();
+        }
+        employeeService.deleteEmployee(id);
+    }
 
     // метод дабавляет сотрудника в базу
-//    @PostMapping("/")
-//
-//    public void addEmployee(@RequestBody EmployeeDTO employee) {
-//        employeeService.addEmployee(employee);
-//    }
-//
-//    // метод для изменения данных сотрудника
-//    @PutMapping("/{id}")
-//    @SneakyThrows
-//    public void editEmployee(@PathVariable int id, @RequestBody EmployeeDTO employeeDTO) {
-//        EmployeeDTO existingEmployeeDTO = employeeService.getEmployeeById(id);
-//        if (existingEmployeeDTO == null) {
-//            throw new IOException();
-//        }
-//        if (employeeDTO.getId() == 0 || employeeDTO.getId() < getAllEmployees().size()) {
-//            throw new IOException();
-//        }
-//        employeeService.editEmployee(id, employeeDTO);
-//    }
-//
-//    // метод возвращает список сотрудников по позиции
+    @PostMapping("/")
+
+    public void addEmployee(@RequestBody EmployeeDTO employee) {
+        employeeService.addEmployee(employee);
+    }
+
+    // метод для изменения данных сотрудника
+    @PutMapping("/{id}")
+    @SneakyThrows
+    public void editEmployee(@PathVariable int id, @RequestBody EmployeeDTO employeeDTO) {
+        EmployeeDTO existingEmployeeDTO = employeeService.getEmployeeById(id);
+        if (existingEmployeeDTO == null) {
+            throw new IOException();
+        }
+        if (employeeDTO.getId() == 0 || employeeDTO.getId() < getAllEmployees().size()) {
+            throw new IOException();
+        }
+        employeeService.editEmployee(id, employeeDTO);
+    }
+
+    // метод возвращает список сотрудников по позиции
 
     @GetMapping()
     List<EmployeeDTO> getEmployeeByPositionName(@RequestParam(required = false) String position) {
@@ -130,11 +128,8 @@ public class EmployeeController {
     }
 
 
-//    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public void createEmployeeFromFile(@RequestParam("file") MultipartFile file) throws IOException {
-//        employeeService.uploadEmployeeFromFile(file);
-//    }
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void createEmployeeFromFile(@RequestParam("file") MultipartFile file) throws IOException {
+        employeeService.uploadEmployeeFromFile(file);
+    }
 }
-
-
-
