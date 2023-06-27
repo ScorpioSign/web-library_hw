@@ -1,8 +1,12 @@
 package ru.skypro.homework.springboot.weblibrary_hw.security;
 
 import jakarta.persistence.*;
+
 import lombok.Getter;
+
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,5 +19,11 @@ public class AuthUser {
 
     @Column(nullable = false, unique = true)
     private String username;
+
     private String password;
+
+    @JoinColumn(name = "user_id")
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Role> roleList;
+
 }

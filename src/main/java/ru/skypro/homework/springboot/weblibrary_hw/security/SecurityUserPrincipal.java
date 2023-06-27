@@ -1,24 +1,35 @@
 package ru.skypro.homework.springboot.weblibrary_hw.security;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-import java.util.Collection;
+
+import java.util.*;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class SecurityUserPrincipal implements UserDetails {
     private AuthUser user;
 
-    // Конструктор класса SecurityUserPrincipal,
-    // принимающий объект класса AuthUser.
+
+    private List<SecurityGrand> securityGrandList;
+
     public SecurityUserPrincipal(AuthUser user) {
         this.user = user;
+        this.securityGrandList = user.getRoleList().stream()
+                .map(SecurityGrand::new)
+                .toList();
     }
 
-    @Override
     // Возвращает авторитеты (роли) пользователя.
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return new ArrayList<>(securityGrandList);
     }
 
     @Override
@@ -58,4 +69,3 @@ public class SecurityUserPrincipal implements UserDetails {
     }
 
 }
-
