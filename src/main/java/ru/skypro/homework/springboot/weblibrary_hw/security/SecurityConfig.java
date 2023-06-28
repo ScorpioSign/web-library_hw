@@ -1,19 +1,16 @@
-package ru.skypro.homework.springboot.weblibrary_hw.security.config;
+package ru.skypro.homework.springboot.weblibrary_hw.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -26,18 +23,18 @@ import javax.sql.DataSource;
 @Configuration
 public class SecurityConfig {
     @Autowired
-    // зависимость UserDetailsService для работы с данными пользователя.
-        private UserDetailsService userDetailsService;
+    // Внедряем зависимость UserDetailsService
+    // для работы с данными пользователя.
+    private UserDetailsService userDetailsService;
 
     @Bean
     // Создаем экземпляр PasswordEncoder для шифрования паролей.
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-        //return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
-    // экземпляр DaoAuthenticationProvider
+    // Создаем экземпляр DaoAuthenticationProvider
     // для работы с аутентификацией через базу данных.
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -48,8 +45,8 @@ public class SecurityConfig {
         return authProvider;
     }
 
-
-    // бин userDetailsManager: использует JdbcUserDetailsManager для работы с базой данных.
+    // Создаем бин userDetailsManager.
+    // Он использует JdbcUserDetailsManager для работы с базой данных.
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource,
                                                  AuthenticationManager authenticationManager) {
@@ -98,5 +95,4 @@ public class SecurityConfig {
             throw new RuntimeException(e);
         }
     }
-
 }
