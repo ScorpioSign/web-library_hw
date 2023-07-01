@@ -25,4 +25,15 @@ public class Employee {
         this.name = name;
         this.salary = salary;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Сотрудник : id ").append(id).append(", ")
+                .append(name).append(", ")
+                .append("зарплата: ").append(salary).append(", ")
+                .append("отдел: ").append(departmentName);
+        return sb.toString();
+
+    }
 }

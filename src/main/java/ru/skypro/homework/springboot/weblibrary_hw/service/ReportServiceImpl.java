@@ -2,6 +2,8 @@ package ru.skypro.homework.springboot.weblibrary_hw.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -22,15 +24,16 @@ import java.util.List;
 @Service
 public class ReportServiceImpl implements ReportService {
     private final ReportRepository reportRepository;
-
+    private static final Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
 
     @Override
     public int createReport() throws IOException {
-
+        logger.info("Вызван метод создания отчёта и записи его в файл");
 
         String fileName = fileName();
         ObjectMapper objectMapper = new ObjectMapper();
         List<EmployeeReportDTO> employeeReport = reportRepository.createReport();
+        logger.debug("Получены данные сотрудников из БД");
         String json = objectMapper.writeValueAsString(employeeReport); // JSON-строка
         System.out.println(json);
         // записываем файл
@@ -39,6 +42,7 @@ public class ReportServiceImpl implements ReportService {
 
         Report report = new Report(file.getPath());
         reportRepository.save(report);
+        logger.debug("Данные сохранены в файл");
         return report.getId();
     }
 
@@ -49,7 +53,11 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public ResponseEntity<Resource> getReportById(int id) throws IOException, IncorrectIdException {
-        Report report = reportRepository.findById(id).orElseThrow(IncorrectIdException::new);
+        logger.info("Вызван метод получения отчета в формате JSON по id={} ", id);
+        Report report = reportRepository.findById(id).orElseThrow(() -> {
+            logger.error("Не найден файл с id " + id);
+            return new IncorrectIdException();
+        });
         String fileName = report.getPath();
         Resource resource = new ByteArrayResource(Files.readAllBytes(Path.of(fileName)));
         return ResponseEntity.ok()
