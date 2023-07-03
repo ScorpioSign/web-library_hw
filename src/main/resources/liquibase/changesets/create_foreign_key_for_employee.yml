@@ -1,0 +1,18 @@
+databaseChangeLog:
+- changeSet:
+    id: 6
+    author: Nataly
+    changes:
+      - addColumn:
+          tableName: employee
+          columns:
+            - column:
+                name: position_id
+                type: integer
+                constraints:
+                  nullable: false
+            - addForeignKeyConstraint:
+                baseTableName: employee
+                baseColumnNames: position_id
+                referencedTableName: position
+                referencedColumnNames: id

@@ -2,6 +2,7 @@ package ru.skypro.homework.springboot.weblibrary_hw.service;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

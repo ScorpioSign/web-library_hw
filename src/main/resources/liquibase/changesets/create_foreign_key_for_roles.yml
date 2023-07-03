@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: Nataly
+      changes:
+        - addColumn:
+            tableName: roles
+            columns:
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - addForeignKeyConstraint:
+                  baseTableName: roles
+                  baseColumnNames: user_id
+                  referencedTableName: auth_user
+                  referencedColumnNames: id
