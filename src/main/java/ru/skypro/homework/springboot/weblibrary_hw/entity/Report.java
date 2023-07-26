@@ -14,6 +14,8 @@ import java.io.File;
 @Getter
 @Setter
 @Accessors(chain = true)
+@EqualsAndHashCode
+@ToString
 
 public class Report {
     @Id
@@ -23,7 +25,5 @@ public class Report {
     @Column(name = "path", columnDefinition = "text")
     String path;
 
-    public Report(String path) {
-        this.path = path;
-    }
+
 }

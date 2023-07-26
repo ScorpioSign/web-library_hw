@@ -8,6 +8,7 @@ import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeReportDTO;
 import ru.skypro.homework.springboot.weblibrary_hw.entity.Employee;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface EmployeeRepository extends CrudRepository<Employee, Integer>, PagingAndSortingRepository {
@@ -41,5 +42,8 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer>, P
     @Query(value = "select e from Employee e where e.salary = (SELECT MAX(salary) FROM Employee)")
     List<Employee> withHighestSalary();
 
+    @Query("select new ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeFullInfo(e.id, e.name, e.salary, p.name) " +
+            "from Employee e left join Position p where e.position.id = p.id and e.id = ?1")
+    Optional<EmployeeFullInfo> getEmployeeByIdFullInfo(int id);
 
 }

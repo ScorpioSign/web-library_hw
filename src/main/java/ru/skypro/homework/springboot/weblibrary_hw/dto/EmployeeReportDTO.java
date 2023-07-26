@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
+@EqualsAndHashCode
 
 
 public class EmployeeReportDTO implements Serializable {

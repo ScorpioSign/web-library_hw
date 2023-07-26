@@ -10,8 +10,8 @@ import java.io.IOException;
 
 
 public interface ReportService {
-    ResponseEntity<Resource> getReportById(int id) throws IOException, IncorrectIdException;
-
+   // ResponseEntity<Resource> getReportById(int id) throws IOException, IncorrectIdException;
+    String getReportById(int id) throws IOException;
     int createReport() throws IOException;
 
 

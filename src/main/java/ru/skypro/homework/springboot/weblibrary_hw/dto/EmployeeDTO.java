@@ -1,22 +1,27 @@
 package ru.skypro.homework.springboot.weblibrary_hw.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class EmployeeDTO implements Serializable {
     private int id;
     private String name;
     private int salary;
     private String departmentName;
+
+    public EmployeeDTO(int id, String name, int salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
 
     @Override
     public String toString() {
@@ -27,4 +32,5 @@ public class EmployeeDTO implements Serializable {
                 .append("отдел: ").append(departmentName);
         return sb.toString();
     }
+
 }

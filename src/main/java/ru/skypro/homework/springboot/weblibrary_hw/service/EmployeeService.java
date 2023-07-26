@@ -5,6 +5,7 @@ import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeDTO;
 
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeFullInfo;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeReportDTO;
+import ru.skypro.homework.springboot.weblibrary_hw.entity.Employee;
 import ru.skypro.homework.springboot.weblibrary_hw.exceptions.IncorrectIdException;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public interface EmployeeService {
 
 
     // метод для изменения данных сотрудника
-    void editEmployee(int id, EmployeeDTO employeeDTO) throws IncorrectIdException;
+    Employee editEmployee(int id, EmployeeDTO employeeDTO) throws IncorrectIdException;
 
 
     // метод удаляет сотрудника по id

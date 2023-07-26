@@ -3,6 +3,7 @@ package ru.skypro.homework.springboot.weblibrary_hw.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.springboot.weblibrary_hw.dto.EmployeeDTO;
