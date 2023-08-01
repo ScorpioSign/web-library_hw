@@ -29,8 +29,8 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public int createReport() throws IOException {
         logger.info("Вызван метод создания отчёта и записи его в файл");
-
-        String fileName = fileName();
+        int id = (int) reportRepository.count();
+        String fileName = fileName(id);
         ObjectMapper objectMapper = new ObjectMapper();
         List<EmployeeReportDTO> employeeReport = reportRepository.createReport();
         logger.debug("Получены данные сотрудников из БД");
@@ -40,30 +40,32 @@ public class ReportServiceImpl implements ReportService {
         File file = new File("src/main/java/" + fileName);
         Files.writeString(file.toPath(), json);
 
-        Report report = new Report(file.getPath());
+        Report report = new Report(id + 1, file.getPath());;
         reportRepository.save(report);
         logger.debug("Данные сохранены в файл");
         return report.getId();
     }
 
-    private String fileName() {
-        int id = (int) reportRepository.count();
-        return "report" + id + ".json";
+    private String fileName(int id) {
+        //int id = (int) reportRepository.count();
+        String fileName = "report" + id + ".json";
+        return fileName;
     }
 
     @Override
-    public ResponseEntity<Resource> getReportById(int id) throws IOException, IncorrectIdException {
+    public String getReportById(int id) throws IOException, IncorrectIdException {
         logger.info("Вызван метод получения отчета в формате JSON по id={} ", id);
         Report report = reportRepository.findById(id).orElseThrow(() -> {
             logger.error("Не найден файл с id " + id);
             return new IncorrectIdException();
         });
-        String fileName = report.getPath();
-        Resource resource = new ByteArrayResource(Files.readAllBytes(Path.of(fileName)));
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(resource);
+//        String fileName = report.getPath();
+//        Resource resource = new ByteArrayResource(Files.readAllBytes(Path.of(fileName)));
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+//                .body(resource);
+        return report.getPath();
     }
 
 

@@ -16,7 +16,6 @@ import ru.skypro.homework.springboot.weblibrary_hw.exceptions.IncorrectIdExcepti
 import ru.skypro.homework.springboot.weblibrary_hw.repository.EmployeeRepository;
 
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,15 +54,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeFullInfo> getAllEmployeeFullInfo() {
         logger.info("Вызываем метод для получения списка сотрудников с указанием отдела");
         return employeeRepository.findAllEmployeeFullInfo();
-            }
+    }
 
 
     @Override
     public EmployeeFullInfo getAllEmployeeByIdFullInfo(int id) throws IncorrectIdException {
         logger.info("Вызвар метод для получения сотрудника по id={} с наименованием отдела", id);
-        return employeeRepository.findById(id)
-                .map(EmployeeMapper::toEmployeeFullInfo)
+        //return employeeRepository.findById(id)
+                //.map(EmployeeMapper::toEmployeeFullInfo)
                 //.orElseThrow(IncorrectIdException::new);
+        return employeeRepository.getEmployeeByIdFullInfo(id)
                 .orElseThrow(() -> {
                     logger.error("Не найден сотрудник с id " + id);
                     return new IncorrectIdException();
@@ -106,18 +106,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 //                .map(EmployeeMapper::fromEmployee)
 //                .orElseThrow(IncorrectIdException::new);
 //            }
-    public EmployeeDTO getEmployeeById(int id)  {
-        logger.info("Вызван метод поиска сотрудника по id={} ", + id );
-     return employeeRepository.findById(id)
-            .map(EmployeeMapper::fromEmployee)
-            .orElseThrow(() -> {
-             logger.error("Не найден сотрудник с id " + id);
-             return new IncorrectIdException();
-     }
-     );
+    public EmployeeDTO getEmployeeById(int id) {
+        logger.info("Вызван метод поиска сотрудника по id={} ", +id);
+        return employeeRepository.findById(id)
+                .map(EmployeeMapper::fromEmployee)
+                .orElseThrow(() -> {
+                            logger.error("Не найден сотрудник с id " + id);
+                            return new IncorrectIdException();
+                        }
+                );
 
 
-}
+    }
 
     @Override
     public void addEmployee(EmployeeDTO employee) {
@@ -127,10 +127,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void editEmployee(int id, EmployeeDTO employeeDTO) throws IncorrectIdException {
-        logger.info("Вызыван метод изменения данных сотрудника с id={} ", + id);
+    public Employee editEmployee(int id, EmployeeDTO employeeDTO) throws IncorrectIdException {
+        logger.info("Вызыван метод изменения данных сотрудника с id={} ", +id);
         Employee employee = employeeRepository.findById(id)
-               // .orElseThrow(IncorrectIdException::new);
+                // .orElseThrow(IncorrectIdException::new);
                 .orElseThrow(() -> {
                     logger.error("Не найден сотрудник с id " + id);
                     return new IncorrectIdException();
@@ -143,12 +143,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         logger.debug("Новые даные сотрудника {} сохранены в БД", employee);
         employeeRepository.save(employee);
-
+        return employee;
     }
 
     @Override
     public void deleteEmployee(int id) throws IncorrectIdException {
-        logger.info("Вызван метод удаления сотрудника по id={} ",  + id );
+        logger.info("Вызван метод удаления сотрудника по id={} ", +id);
         if (employeeRepository.existsById(id)) {
             logger.debug("Удален сотрудник с id={} ", id);
             employeeRepository.deleteById(id);
